@@ -14,7 +14,9 @@ describe('simpleCalculator tests', () => {
   });
 
   test('should multiply two numbers', () => {
-    // Write your test here
+    const input = { a: 10, b: 5, action: Action.Multiply };
+    const result = simpleCalculator(input);
+    expect(result).toBe(50);
   });
 
   test('should divide two numbers', () => {
