@@ -20,7 +20,9 @@ describe('simpleCalculator tests', () => {
   });
 
   test('should divide two numbers', () => {
-    // Write your test here
+    const input = { a: 10, b: 5, action: Action.Divide };
+    const result = simpleCalculator(input);
+    expect(result).toBe(2);
   });
 
   test('should exponentiate two numbers', () => {
