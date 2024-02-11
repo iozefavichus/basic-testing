@@ -16,24 +16,24 @@ describe('resolveValue', () => {
 
 describe('throwError', () => {
   test('should throw error with provided message', () => {
-    const message = 'Error message';
-    const result = throwError(message);
-    expect(result).toBe(message);
+    const errorMessage = 'Error message';
+    expect(() => throwError(errorMessage)).toThrowError(errorMessage);
   });
 
   test('should throw error with default message if message is not provided', () => {
-    // Write your test here
+    const defaultErrorMessage = 'Oops!';
+    expect(() => throwError()).toThrowError(defaultErrorMessage);
   });
 });
 
 describe('throwCustomError', () => {
   test('should throw custom error', () => {
-    // Write your test here
+    expect(() => throwCustomError()).toThrowError(MyAwesomeError);
   });
 });
 
 describe('rejectCustomError', () => {
   test('should reject custom error', async () => {
-    // Write your test here
+    await expect(rejectCustomError()).rejects.toThrowError(MyAwesomeError);
   });
 });
