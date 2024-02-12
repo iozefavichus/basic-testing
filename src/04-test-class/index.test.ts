@@ -1,4 +1,9 @@
-import { getBankAccount, BankAccount } from '.';
+import {
+  getBankAccount,
+  BankAccount,
+  InsufficientFundsError,
+  TransferFailedError,
+} from '.';
 
 describe('BankAccount', () => {
   let initialBalance: number;
@@ -14,27 +19,45 @@ describe('BankAccount', () => {
   });
 
   test('should throw InsufficientFundsError error when withdrawing more than balance', () => {
-    // Write your test here
+    expect(() => account.withdraw(initialBalance + 1)).toThrow(
+      InsufficientFundsError,
+    );
   });
 
   test('should throw error when transferring more than balance', () => {
-    // Write your test here
+    const account2 = getBankAccount(0);
+    expect(() => account.transfer(initialBalance + 1, account2)).toThrow(
+      InsufficientFundsError,
+    );
   });
 
   test('should throw error when transferring to the same account', () => {
-    // Write your test here
+    expect(() => account.transfer(50, account)).toThrow(TransferFailedError);
   });
 
   test('should deposit money', () => {
-    // Write your test here
+    const depositAmount = 100;
+    const expectedBalance = initialBalance + depositAmount;
+    account.deposit(depositAmount);
+    expect(account.getBalance()).toBe(expectedBalance);
   });
 
   test('should withdraw money', () => {
-    // Write your test here
+    const withdrawalAmount = 100;
+    const expectedBalance = initialBalance - withdrawalAmount;
+    account.withdraw(withdrawalAmount);
+    expect(account.getBalance()).toBe(expectedBalance);
   });
 
   test('should transfer money', () => {
-    // Write your test here
+    const initialBalance2 = 0;
+    const transferAmount = 100;
+    const account2 = getBankAccount(initialBalance2);
+    const expectedBalance1 = initialBalance - transferAmount;
+    const expectedBalance2 = initialBalance2 + transferAmount;
+    account.transfer(transferAmount, account2);
+    expect(account.getBalance()).toBe(expectedBalance1);
+    expect(account2.getBalance()).toBe(expectedBalance2);
   });
 
   test('fetchBalance should return number in case if request did not failed', async () => {
